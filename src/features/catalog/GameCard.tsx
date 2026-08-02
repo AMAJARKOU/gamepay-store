@@ -15,7 +15,7 @@ export function GameCard({ game }: GameCardProps) {
       <img
         className="game-card__image"
         src={game.imageUrl}
-        alt=""
+        alt={`Cover of ${game.title}`}
         loading="lazy"
       />
 
