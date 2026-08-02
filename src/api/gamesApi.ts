@@ -12,7 +12,7 @@ export interface GetGamesParams {
 function toOptionalNumber(value: string): number | null {
   const parsedValue = Number(value);
 
-  return Number.isFinite(parsedValue) && value ? parsedValue : null;
+  return Number.isFinite(parsedValue) && parsedValue > 0 ? parsedValue : null;
 }
 
 function mapDealToGame(deal: CheapSharkDealDto): Game {

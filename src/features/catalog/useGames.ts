@@ -3,12 +3,18 @@ import { getGames } from "../../api/gamesApi";
 import type { AsyncState } from "../../types/api";
 import type { Game } from "../../types/game";
 
+interface UseGamesOptions {
+  search?: string;
+}
+
 export interface UseGamesResult {
   state: AsyncState<Game[]>;
   retry: () => void;
 }
 
-export function useGames(): UseGamesResult {
+export function useGames({
+  search = "",
+}: UseGamesOptions = {}): UseGamesResult {
   const [state, setState] = useState<AsyncState<Game[]>>({
     status: "idle",
   });
@@ -28,6 +34,7 @@ export function useGames(): UseGamesResult {
       try {
         const games = await getGames({
           pageSize: 12,
+          search,
           signal: controller.signal,
         });
 
@@ -57,7 +64,7 @@ export function useGames(): UseGamesResult {
     return () => {
       controller.abort();
     };
-  }, [requestVersion]);
+  }, [requestVersion, search]);
 
   return {
     state,
